@@ -79,6 +79,7 @@
 
   // opts: { topic, section: id of the topic's section, items: [{ key, name }], enter(): switch the topic to this mode, change(): redraw the map }
   function attach(opts) {
+    if (typeof Celebrate !== 'undefined') Celebrate.setItems(opts.topic, opts.items); // names and size for the celebrations (FEAT-m3-test-024)
     const section = document.getElementById(opts.section);
     const nav = section.querySelector('nav');
     const side = section.querySelector('.side');

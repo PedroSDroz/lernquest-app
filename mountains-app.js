@@ -129,10 +129,10 @@
     g('mt-test-run').hidden = !run;
     g('mt-test-end').hidden = !testDone || !!reviewing;
     g('mt-test-look').hidden = !(testDone && reviewing);
-    g('mt-test-title').textContent = 'Test ' + (kept.testCount() + 1);
+    g('mt-test-title').textContent = 'Test Nr. ' + (kept.testCount() + 1);
     if (testDone && reviewing) { renderReview(); return; }
     if (testDone) {
-      g('mt-test-done').textContent = 'Test ' + kept.testCount() + ' geschafft!';
+      g('mt-test-done').textContent = 'Test Nr. ' + kept.testCount() + ' geschafft!';
       g('mt-test-score').textContent = test.score() + ' von ' + test.total;
       return;
     }

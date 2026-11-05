@@ -99,8 +99,12 @@
 
   // Confetti when a test is finished with three stars: a lot of it, in different sizes, speeds and turns (REQ-m3-test-271).
   const PIECES = 150;
+  let lastConfetti = 0;
   function confetti() {
     if (reduced) return;
+    const now = Date.now();
+    if (now - lastConfetti < 2000) return; // three stars and 100 % together play it once (REQ-m3-test-313)
+    lastConfetti = now;
     const box = document.createElement('div');
     box.className = 'confetti';
     box.setAttribute('aria-hidden', 'true');
@@ -119,6 +123,7 @@
     document.body.appendChild(box);
     setTimeout(function () { box.remove(); }, 8000);
   }
+  window.lqConfetti = confetti;
   const endObserver = new MutationObserver(function (list) {
     list.forEach(function (m) {
       if (m.target.hidden || m.oldValue === null) return;

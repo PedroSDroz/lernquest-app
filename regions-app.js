@@ -171,10 +171,10 @@
     g('rg-test-run').hidden = !run;
     g('rg-test-end').hidden = !testDone || !!reviewing;
     g('rg-test-look').hidden = !(testDone && reviewing);
-    g('rg-test-title').textContent = 'Test ' + (kept.testCount() + 1);
+    g('rg-test-title').textContent = 'Test Nr. ' + (kept.testCount() + 1);
     if (testDone && reviewing) { renderReview(); return; }
     if (testDone) {
-      g('rg-test-done').textContent = 'Test ' + kept.testCount() + ' geschafft!';
+      g('rg-test-done').textContent = 'Test Nr. ' + kept.testCount() + ' geschafft!';
       g('rg-test-score').textContent = test.score() + ' von ' + test.total;
       return;
     }

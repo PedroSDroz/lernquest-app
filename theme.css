@@ -8,6 +8,7 @@
   --leaf: #5cc628; --leaf-shade: #3e9612; --on-leaf: #12330a; --leaf-soft: #e6f8d9; --leaf-ink: #2b6b0a;
   --sky: #1ca6ea; --sky-shade: #1083bd; --on-sky: #06324a; --sky-soft: #dff3fd; --sky-ink: #0a6596;
   --coral: #d6342a; --coral-shade: #a8241c; --coral-soft: #ffe7e4; --coral-ink: #b0261d;
+  --sun: #ffc21a; --sun-soft: #fff3cc; --sun-ink: #7a4f00;
   --focus: var(--sky-ink);
   /* map colours */
   --map-bg: #f5f7f2; --land: #e4ecd6; --land-neutral: #eef0f2; --land-line: #8a9185; --map-halo: #ffffff;
@@ -21,6 +22,7 @@
     --leaf: #6ad633; --leaf-shade: #47a315; --on-leaf: #0d2607; --leaf-soft: #1c3613; --leaf-ink: #a3e67a;
     --sky: #3bb6f0; --sky-shade: #1a8fc7; --sky-soft: #0e3044; --sky-ink: #86d2f8;
     --coral: #ff6b5f; --coral-shade: #c94a40; --coral-soft: #43201c; --coral-ink: #ff9e95;
+    --sun-soft: #3a2e0d; --sun-ink: #ffd666;
     --map-bg: #1b232c; --land: #2d3b2c; --land-neutral: #2a3440; --land-line: #5e6b78; --map-halo: #1b232c;
     --mark-line: #eef2ea; --right: #6ad633; --wrong: #ff6b5f; --pick: #7a4a2f; --water: #1f6f9c; --water-line: #86d2f8;
   }
@@ -31,6 +33,7 @@
   --leaf: #6ad633; --leaf-shade: #47a315; --on-leaf: #0d2607; --leaf-soft: #1c3613; --leaf-ink: #a3e67a;
   --sky: #3bb6f0; --sky-shade: #1a8fc7; --sky-soft: #0e3044; --sky-ink: #86d2f8;
   --coral: #ff6b5f; --coral-shade: #c94a40; --coral-soft: #43201c; --coral-ink: #ff9e95;
+  --sun-soft: #3a2e0d; --sun-ink: #ffd666;
   --map-bg: #1b232c; --land: #2d3b2c; --land-neutral: #2a3440; --land-line: #5e6b78; --map-halo: #1b232c;
   --mark-line: #eef2ea; --right: #6ad633; --wrong: #ff6b5f; --pick: #7a4a2f; --water: #1f6f9c; --water-line: #86d2f8;
 }
@@ -578,3 +581,19 @@ main:has(.side [id$="practice"]:not([hidden])) > .site-footer { display: none; }
 .pbar.rev i { height: 30px; cursor: pointer; transition: transform 80ms ease-out; }
 .pbar.rev i:hover { transform: translateY(-2px); }
 .pbar.rev i:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+/* Celebrations (FEAT-m3-test-024): reward colours (sun), a star as the mark, never colour alone. */
+.cele { position: relative; border-radius: 20px; padding: 12px 16px 12px 60px; min-height: 52px; display: flex; align-items: center; background: var(--sun-soft); color: var(--sun-ink); border: 2px solid var(--sun); font-size: 17px; line-height: 24px; font-weight: 700; animation: lq-cele-pop 350ms ease-out both; }
+.cele.big { border-width: 3px; font-size: 19px; line-height: 26px; padding-top: 14px; padding-bottom: 14px; }
+.cele b { font-weight: 900; }
+.cele-badge { position: absolute; left: 12px; top: 50%; translate: 0 -50%; width: 36px; height: 36px; }
+.cele-badge svg { width: 100%; height: 100%; fill: var(--sun); stroke: var(--sun-ink); stroke-width: 1.6; stroke-linejoin: round; }
+.cele-burst { position: absolute; left: 30px; top: 50%; width: 0; height: 0; pointer-events: none; z-index: 4; }
+.cele-burst svg { position: absolute; left: -8px; top: -8px; width: 16px; height: 16px; fill: var(--sun); stroke: var(--sun-ink); stroke-width: 2; stroke-linejoin: round; animation: lq-cele-fly 1s ease-out both; }
+@keyframes lq-cele-pop { 0% { transform: scale(.85); opacity: 0; } 60% { transform: scale(1.04); opacity: 1; } 100% { transform: scale(1); } }
+@keyframes lq-cele-fly { from { transform: translate(0, 0) scale(.4) rotate(0); opacity: 1; } to { transform: translate(var(--dx), var(--dy)) scale(1.1) rotate(var(--rot)); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .cele { animation: none; } .cele-burst { display: none; } }
+@media (max-width: 900px) {
+  .actbar { flex-wrap: wrap; }
+  .actbar > .cele { flex: 1 0 100%; padding-top: 8px; padding-bottom: 8px; font-size: 16px; line-height: 22px; min-height: 0; }
+}

@@ -140,10 +140,10 @@
     g('ps-test-run').hidden = !run;
     g('ps-test-end').hidden = !testDone || !!reviewing;
     g('ps-test-look').hidden = !(testDone && reviewing);
-    g('ps-test-title').textContent = 'Test ' + (kept.testCount() + 1);
+    g('ps-test-title').textContent = 'Test Nr. ' + (kept.testCount() + 1);
     if (testDone && reviewing) { renderReview(); return; }
     if (testDone) {
-      g('ps-test-done').textContent = 'Test ' + kept.testCount() + ' geschafft!';
+      g('ps-test-done').textContent = 'Test Nr. ' + kept.testCount() + ' geschafft!';
       g('ps-test-score').textContent = test.score() + ' von ' + test.total;
       return;
     }

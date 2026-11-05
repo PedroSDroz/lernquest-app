@@ -108,10 +108,10 @@ function renderTest() {
     }
     paths[r.id].setAttribute('class', cls);
   }
-  $('test-title').textContent = 'Test ' + (results.testCount() + 1);
+  $('test-title').textContent = 'Test Nr. ' + (results.testCount() + 1);
   if (testDone && reviewing) { renderReview(); return; }
   if (testDone) {
-    $('test-done').textContent = 'Test ' + results.testCount() + ' geschafft!';
+    $('test-done').textContent = 'Test Nr. ' + results.testCount() + ' geschafft!';
     $('test-score').textContent = test.score() + ' von ' + test.total;
     return;
   }

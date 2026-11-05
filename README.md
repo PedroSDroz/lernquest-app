@@ -47,4 +47,5 @@ Map and place data live in `data/*.js`.
 
 ## Versions
 
+- `v1.2` – celebrations and test headings; see `CHANGELOG.md`.
 - `v1.1` – first published release.

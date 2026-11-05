@@ -139,10 +139,10 @@
     g('cy-test-run').hidden = !run;
     g('cy-test-end').hidden = !testDone || !!reviewing;
     g('cy-test-look').hidden = !(testDone && reviewing);
-    g('cy-test-title').textContent = 'Test ' + (kept.testCount() + 1);
+    g('cy-test-title').textContent = 'Test Nr. ' + (kept.testCount() + 1);
     if (testDone && reviewing) { renderReview(); return; }
     if (testDone) {
-      g('cy-test-done').textContent = 'Test ' + kept.testCount() + ' geschafft!';
+      g('cy-test-done').textContent = 'Test Nr. ' + kept.testCount() + ' geschafft!';
       g('cy-test-score').textContent = test.score() + ' von ' + test.total;
       return;
     }
