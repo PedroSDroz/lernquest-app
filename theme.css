@@ -627,7 +627,8 @@ body.home main > :not(#dashboard):not(.stage-title) { display: none !important; 
 /* One row, 64 px, always at the top: the brand (logo and name, a button to the Übersicht), the light/dark toggle and the
    profile's figure. The other topics are reached from the Übersicht, so the bar shows no topic list. The help button and the
    two-part switch are not shown on the phone. */
-.theme-toggle { display: none; }
+/* `.rail .theme-toggle`, not `.theme-toggle`: `.rail button { display: flex }` is more specific and would show the toggle on the desktop. */
+.rail .theme-toggle { display: none; }
 @media (max-width: 900px) {
   :root { --rail-h: 66px; }
   .rail { position: sticky; top: 0; z-index: 25; height: 64px; padding: 0 12px 0 16px; gap: 10px; flex-direction: row; align-items: center; overflow: visible; background: var(--surface); }
