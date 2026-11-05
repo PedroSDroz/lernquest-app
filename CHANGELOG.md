@@ -4,6 +4,10 @@ All notable changes to Lernquest (Österreich lernen), newest first.
 
 When a release is tagged, set `VERSION` and `RELEASE_DATE` in `src/version.js` to the newest entry below; a test fails if they disagree. The heading format is `## v1.2 – 2026-11-05`.
 
+## v1.2.2 – 2026-11-05
+
+- On a phone the topic strip is replaced by a slim bar that stays at the top: the logo and name lead to the Übersicht, one moon button switches between hell and dunkel, and the profile shows only the figure. The help button is not shown on a phone. During a practice the bar steps aside (`FEAT-m3-test-026`).
+
 ## v1.2.1 – 2026-11-05
 
 - New help button beside the Hell/Dunkel switch: a bubble with a random capybara message and the version and date of the release. The version is a link to the project's page on GitHub.

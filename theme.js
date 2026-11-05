@@ -140,16 +140,27 @@
   const KEY = 'm3-test-theme';
   const buttons = { light: document.getElementById('theme-light'), dark: document.getElementById('theme-dark') };
   const media = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+  // On the phone one toggle with a moon replaces the two-part switch (FEAT-m3-test-026); it is pressed in the dark theme.
+  const toggle = document.getElementById('theme-toggle');
   function show(mode) {
     buttons.light.setAttribute('aria-pressed', String(mode !== 'dark'));
     buttons.dark.setAttribute('aria-pressed', String(mode === 'dark'));
+    if (toggle) toggle.setAttribute('aria-pressed', String(mode === 'dark'));
   }
   function apply(mode) { document.documentElement.setAttribute('data-theme', mode); show(mode); }
   function set(mode) { apply(mode); try { localStorage.setItem(KEY, mode); } catch (e) { /* not kept */ } }
   buttons.light.addEventListener('click', function () { set('light'); });
   buttons.dark.addEventListener('click', function () { set('dark'); });
+  if (toggle) toggle.addEventListener('click', function () { set(toggle.getAttribute('aria-pressed') === 'true' ? 'light' : 'dark'); });
   // Without a saved choice the page follows the device; the switch only shows what is in effect.
   const chosen = document.documentElement.getAttribute('data-theme');
   show(chosen || (media && media.matches ? 'dark' : 'light'));
   if (media && media.addEventListener) media.addEventListener('change', function () { if (!document.documentElement.getAttribute('data-theme')) show(media.matches ? 'dark' : 'light'); });
+})();
+
+// The brand (logo and name) goes to the Übersicht, as the home button of the rail does (FEAT-m3-test-026).
+(function () {
+  if (typeof document === 'undefined') return;
+  const brand = document.getElementById('brand-home'), home = document.getElementById('home-btn');
+  if (brand && home) brand.addEventListener('click', function () { home.click(); });
 })();
