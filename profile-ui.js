@@ -136,7 +136,8 @@
       card.append(row);
       return n;
     };
-    const credit = () => {};
+    // The DiceBear credit belongs to the figure selection only (creating a profile, step 2).
+    const credit = (card) => { if (!profile) card.append(el('p', 'ps-credit', 'Figuren: DiceBear „Clay“ (CC0)')); };
 
     function step1() {
       step = 1;
@@ -159,7 +160,6 @@
       const minHint = el('p', 'ps-min', 'Mindestens ' + NAME_MIN + ' Buchstaben'); minHint.hidden = ok(); wrap.append(minHint);
       input.addEventListener('input', () => { name = input.value; nextBtn.disabled = !ok(); minHint.hidden = ok(); const sv = screen.querySelector('.ps-save'); if (sv) sv.disabled = !ok(); });
       input.addEventListener('keydown', (e) => { if (e.key === 'Enter') go(); });
-      credit(card);
       open(true);
       input.focus();
     }
@@ -236,7 +236,6 @@
         if (profile) { Profiles.update(profile.id, name, choice); Profiles.setActive(profile.id); } else Profiles.create(name, choice);
         reload();
       });
-      credit(card);
       paint();
       open(true);
     }

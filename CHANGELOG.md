@@ -2,6 +2,13 @@
 
 All notable changes to Lernquest (Österreich lernen), newest first.
 
+When a release is tagged, set `VERSION` and `RELEASE_DATE` in `src/version.js` to the newest entry below; a test fails if they disagree. The heading format is `## v1.2 – 2026-11-05`.
+
+## v1.2.1 – 2026-11-05
+
+- New help button beside the Hell/Dunkel switch: a bubble with a random capybara message and the version and date of the release. The version is a link to the project's page on GitHub.
+- The DiceBear credit is shown only on the figure selection; the footer on every page is gone.
+
 ## v1.2 – 2026-11-05
 
 - Celebrations: a message with stars when an item becomes known, plus confetti and messages at 50, 75 and 100 % of a topic (`FEAT-m3-test-024`).
