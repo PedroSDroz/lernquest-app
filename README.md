@@ -48,6 +48,3 @@ Map and place data live in `data/*.js`.
 ## Versions
 
 - `v1.1` – first published release.
-
-This repository is a publish target. It is generated from the `src/` folder of the
-development project, so changes should be made there and copied over.
