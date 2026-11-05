@@ -1,0 +1,517 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>try { var t = localStorage.getItem("m3-test-theme"); if (t === "dark" || t === "light") document.documentElement.setAttribute("data-theme", t); } catch (e) {}</script>
+<title>Österreich lernen</title>
+<link rel="stylesheet" href="countries.css?v=p2">
+<link rel="stylesheet" href="theme.css?v=p2">
+</head>
+<body>
+<div class="shell">
+  <aside class="rail">
+    <div class="brand"><span class="brand-mark"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 19L9 7l4 6 3-4 6 10z"/></svg></span><h1 class="brand-name">Österreich lernen</h1></div>
+  <nav class="topics" aria-label="Thema">
+    <button type="button" id="home-btn" aria-pressed="true"><span class="bub"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7M5 10v10h14V10M10 20v-6h4v6"/></svg></span>Übersicht</button>
+    <button type="button" id="topic-regions" aria-pressed="false"><span class="bub"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5l5-2 6 2 5-2v16l-5 2-6-2-5 2zM9 3v16M15 5v16"/></svg></span>Bundesländer &amp; Hauptstädte</button>
+    <button type="button" id="topic-countries" aria-pressed="false"><span class="bub"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V4M5 4h12l-2 4 2 4H5"/></svg></span>Nachbarländer</button>
+    <button type="button" id="topic-cities" aria-pressed="false"><span class="bub"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V9h6v11M10 20V4h10v16M3 20h18"/></svg></span>Städte</button>
+    <button type="button" id="topic-rivers" aria-pressed="true"><span class="bub"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8c3-3 5 3 9 0s6 3 9 0M3 16c3-3 5 3 9 0s6 3 9 0"/></svg></span>Flüsse</button>
+    <button type="button" id="topic-lakes" aria-pressed="false"><span class="bub"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c4 5 6 8 6 11a6 6 0 0 1-12 0c0-3 2-6 6-11z"/></svg></span>Seen</button>
+    <button type="button" id="topic-mountains" aria-pressed="false"><span class="bub"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 19L9 7l4 6 3-4 6 10z"/></svg></span>Gebirge</button>
+    <button type="button" id="topic-passes" aria-pressed="false"><span class="bub"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20L9 6M21 20L15 6M12 20v-3M12 14v-3M12 8V6"/></svg></span>Gipfel und Pässe</button>
+  </nav>
+    <button type="button" id="profile-chip" class="profile-chip" hidden></button>
+    <div class="theme-switch seg" role="group" aria-label="Darstellung">
+      <button type="button" id="theme-light" aria-pressed="true"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4"/></svg>Hell</button>
+      <button type="button" id="theme-dark" aria-pressed="false"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/></svg>Dunkel</button>
+    </div>
+  </aside>
+<div id="profile-screen" class="profile-screen" hidden></div>
+<main>
+  <h2 id="stage-title" class="stage-title"></h2>
+  <section id="dashboard" aria-label="Übersicht"></section>
+  <div id="rivers" class="contents">
+  <nav aria-label="Modus">
+    <button type="button" id="mode-explore" aria-pressed="true">Karte erkunden</button>
+    <button type="button" id="mode-practice" aria-pressed="false">Üben</button>
+    <button type="button" id="mode-test" aria-pressed="false">Test</button>
+  </nav>
+    <div class="mapcol">
+  <svg id="map" role="img" aria-label="Karte von Österreich mit vierzehn Flüssen"></svg>
+    </div>
+  <div class="side">
+  <p id="river-label" aria-live="polite"></p>
+  <ul id="river-list" aria-label="Flüsse"></ul>
+  <section id="practice" hidden aria-label="Übung">
+    <div id="practice-start">
+      <div class="seg" role="group" aria-label="Richtung">
+        <button type="button" id="start-p2n" aria-pressed="true">Pfad → Name</button>
+        <button type="button" id="start-n2p" aria-pressed="false">Name → Pfad</button>
+      </div>
+    </div>
+    <div id="practice-run" hidden>
+      <p id="progress"></p>
+      <p id="question"></p>
+      <div id="answers"></div>
+      <div class="actbar">
+        <p id="feedback" aria-live="polite"></p>
+        <button type="button" id="next">Weiter</button>
+      </div>
+    </div>
+  </section>
+  <section id="test" hidden aria-label="Test">
+    <div id="test-start">
+      <p id="test-title" class="test-title"></p>
+      <p>10 Fragen. Du bekommst keine Hilfe und keine Antworten zur Auswahl. Zuerst zeigst du die Flüsse auf der Karte, dann schreibst du ihre Namen.</p>
+      <button type="button" class="primary" id="test-go">Test starten</button>
+    </div>
+    <div id="test-run" hidden>
+      <p id="test-progress"></p>
+      <p id="test-question"></p>
+      <div id="test-type"><label for="test-name">Name des Flusses</label>
+        <input id="test-name" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"></div>
+      <button type="button" class="primary" id="test-confirm" disabled>Antwort bestätigen</button>
+    </div>
+    <div id="test-end" hidden>
+      <p id="test-done"></p>
+      <p id="test-score" class="test-score" aria-live="polite"></p>
+      <button type="button" id="test-review">Antworten ansehen</button>
+      <button type="button" class="primary" id="test-again">Nochmal testen</button>
+      <button type="button" id="test-back">Zurück zum Start</button>
+    </div>
+    <div id="test-look" hidden>
+      <p id="look-progress"></p>
+      <p id="look-question"></p>
+      <p id="look-answer"></p>
+      <p id="look-verdict" aria-live="polite"></p>
+      <div class="row"><button type="button" id="look-prev">Zurück</button>
+        <button type="button" id="look-next">Weiter</button>
+        <button type="button" id="look-end">Zur Auswertung</button></div>
+    </div>
+  </section>
+  </div>
+  </div>
+  <section id="regions" class="contents" hidden aria-label="Bundesländer und Hauptstädte">
+    <nav aria-label="Modus (Bundesländer)">
+      <button type="button" id="rg-mode-explore" aria-pressed="true">Karte erkunden</button>
+      <button type="button" id="rg-mode-practice" aria-pressed="false">Üben</button>
+      <button type="button" id="rg-mode-test" aria-pressed="false">Test</button>
+    </nav>
+    <div class="mapcol">
+    <svg id="rg-map" role="img" aria-label="Karte von Österreich mit neun Bundesländern und ihren Hauptstädten"></svg>
+    </div>
+    <div class="side">
+    <p id="rg-label" class="label" aria-live="polite"></p>
+    <div id="rg-dirbar" class="dirbar" hidden>
+      <div class="seg" role="group" aria-label="Richtung">
+        <button type="button" id="rg-dir-m2n" aria-pressed="true">Karte → Name</button>
+        <button type="button" id="rg-dir-n2m" aria-pressed="false">Name → Karte</button>
+      </div>
+    </div>
+    <section id="rg-practice" class="panel" hidden aria-label="Üben">
+      <div class="row">
+        <div class="seg" role="group" aria-label="Was üben?">
+          <button type="button" id="rg-kind-state" aria-pressed="true">Bundesländer</button>
+          <button type="button" id="rg-kind-capital" aria-pressed="false">Hauptstädte</button>
+        </div>
+      </div>
+      <p id="rg-tally" class="tally"></p>
+      <p id="rg-question" class="q"></p>
+      <div id="rg-answers" class="answers"></div>
+      <div class="actbar">
+        <p id="rg-feedback" class="fb" aria-live="polite"></p>
+        <button type="button" id="rg-next" class="primary">Weiter</button>
+      </div>
+    </section>
+    <section id="rg-test" class="panel" hidden aria-label="Test">
+      <div id="rg-test-start">
+        <p id="rg-test-title" class="q"></p>
+        <p>12 Fragen. Du bekommst keine Hilfe und keine Antworten zur Auswahl. Zuerst zeigst du Bundesländer und Hauptstädte auf der Karte, dann schreibst du ihre Namen.</p>
+        <button type="button" class="primary" id="rg-test-go">Test starten</button>
+      </div>
+      <div id="rg-test-run" hidden>
+        <p id="rg-test-progress" class="prog"></p>
+        <p id="rg-test-question" class="q"></p>
+        <div id="rg-test-type"><label for="rg-test-name" id="rg-test-name-label">Name</label>
+          <input id="rg-test-name" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"></div>
+        <button type="button" class="primary" id="rg-test-confirm" disabled>Antwort bestätigen</button>
+      </div>
+      <div id="rg-test-end" hidden>
+        <p id="rg-test-done" class="q"></p>
+        <p id="rg-test-score" class="score" aria-live="polite"></p>
+        <div class="row">
+          <button type="button" id="rg-test-review">Antworten ansehen</button>
+          <button type="button" class="primary" id="rg-test-again">Nochmal testen</button>
+          <button type="button" id="rg-test-back">Zurück zum Start</button>
+        </div>
+      </div>
+      <div id="rg-test-look" hidden>
+        <p id="rg-look-progress" class="prog"></p>
+        <p id="rg-look-question" class="q"></p>
+        <p id="rg-look-answer"></p>
+        <p id="rg-look-verdict" class="fb" aria-live="polite"></p>
+        <div class="row"><button type="button" id="rg-look-prev">Zurück</button>
+          <button type="button" id="rg-look-next">Weiter</button>
+          <button type="button" id="rg-look-end">Zur Auswertung</button></div>
+      </div>
+    </section>
+    </div>
+  </section>
+  <section id="passes" class="contents" hidden aria-label="Gipfel und Pässe">
+    <nav aria-label="Modus (Gipfel und Pässe)">
+      <button type="button" id="ps-mode-explore" aria-pressed="true">Karte erkunden</button>
+      <button type="button" id="ps-mode-practice" aria-pressed="false">Üben</button>
+      <button type="button" id="ps-mode-test" aria-pressed="false">Test</button>
+    </nav>
+    <div class="mapcol">
+    <svg id="ps-map" role="img" aria-label="Karte von Österreich mit acht Gipfeln und fünf Pässen"></svg>
+    <p class="legend" aria-label="Zeichen auf der Karte">
+      <span><svg viewBox="0 0 26 22" aria-hidden="true"><path class="ls" d="M13 2 L21 18 L5 18 Z"/></svg>Gipfel</span>
+      <span><svg viewBox="0 0 26 22" aria-hidden="true"><path class="lp" d="M7 6 H11 V17 H7 M19 6 H15 V17 H19"/></svg>Pass</span>
+    </p>
+    </div>
+    <div class="side">
+    <p id="ps-label" class="label" aria-live="polite"></p>
+    <div id="ps-dirbar" class="dirbar seg" hidden>
+      <button type="button" id="ps-dir-m2n" aria-pressed="true">Karte → Name</button>
+      <button type="button" id="ps-dir-n2m" aria-pressed="false">Name → Karte</button>
+    </div>
+    <section id="ps-practice" class="panel" hidden aria-label="Üben">
+      <p id="ps-tally" class="tally"></p>
+      <p id="ps-question" class="q"></p>
+      <div id="ps-answers" class="answers"></div>
+      <div class="actbar">
+        <p id="ps-feedback" class="fb" aria-live="polite"></p>
+        <button type="button" id="ps-next" class="primary">Weiter</button>
+      </div>
+    </section>
+    <section id="ps-test" class="panel" hidden aria-label="Test">
+      <div id="ps-test-start">
+        <p id="ps-test-title" class="q"></p>
+        <p>8 Fragen: fünf Gipfel und Pässe zeigen, dann drei schreiben. Du bekommst keine Hilfe und keine Antworten zur Auswahl.</p>
+        <button type="button" class="primary" id="ps-test-go">Test starten</button>
+      </div>
+      <div id="ps-test-run" hidden>
+        <p id="ps-test-progress" class="prog"></p>
+        <p id="ps-test-question" class="q"></p>
+        <div id="ps-test-type"><label for="ps-test-name">Name</label>
+          <input id="ps-test-name" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"></div>
+        <button type="button" class="primary" id="ps-test-confirm" disabled>Antwort bestätigen</button>
+      </div>
+      <div id="ps-test-end" hidden>
+        <p id="ps-test-done" class="q"></p>
+        <p id="ps-test-score" class="score" aria-live="polite"></p>
+        <div class="row">
+          <button type="button" id="ps-test-review">Antworten ansehen</button>
+          <button type="button" class="primary" id="ps-test-again">Nochmal testen</button>
+          <button type="button" id="ps-test-back">Zurück zum Start</button>
+        </div>
+      </div>
+      <div id="ps-test-look" hidden>
+        <p id="ps-look-progress" class="prog"></p>
+        <p id="ps-look-question" class="q"></p>
+        <p id="ps-look-answer"></p>
+        <p id="ps-look-verdict" class="fb" aria-live="polite"></p>
+        <div class="row"><button type="button" id="ps-look-prev">Zurück</button>
+          <button type="button" id="ps-look-next">Weiter</button>
+          <button type="button" id="ps-look-end">Zur Auswertung</button></div>
+      </div>
+    </section>
+    </div>
+  </section>
+  <section id="mountains" class="contents" hidden aria-label="Gebirge">
+    <nav aria-label="Modus (Gebirge)">
+      <button type="button" id="mt-mode-explore" aria-pressed="true">Karte erkunden</button>
+      <button type="button" id="mt-mode-practice" aria-pressed="false">Üben</button>
+      <button type="button" id="mt-mode-test" aria-pressed="false">Test</button>
+    </nav>
+    <div class="mapcol">
+    <svg id="mt-map" role="img" aria-label="Karte der Gebirge Österreichs mit zwanzig Gebirgen"></svg>
+    <p id="mt-credit" class="credit"></p>
+    </div>
+    <div class="side">
+    <p id="mt-label" class="label" aria-live="polite"></p>
+    <section id="mt-practice-head" class="panel" hidden aria-label="Gebiet wählen">
+      <div class="row">
+        <div class="seg" role="group" aria-label="Gebiet">
+          <button type="button" id="mt-region-all" aria-pressed="true">Alle</button>
+          <button type="button" id="mt-region-west" aria-pressed="false">West</button>
+          <button type="button" id="mt-region-mitte" aria-pressed="false">Mitte und Süd</button>
+          <button type="button" id="mt-region-ost" aria-pressed="false">Nord und Ost</button>
+        </div>
+      </div>
+      <p id="mt-tally" class="tally"></p>
+    </section>
+    <div id="mt-dirbar" class="dirbar" hidden>
+      <div class="seg" role="group" aria-label="Richtung">
+        <button type="button" id="mt-dir-m2n" aria-pressed="true">Karte → Name</button>
+        <button type="button" id="mt-dir-n2m" aria-pressed="false">Name → Karte</button>
+      </div>
+    </div>
+    <section id="mt-practice" class="panel" hidden aria-label="Üben">
+      <p id="mt-question" class="q"></p>
+      <div id="mt-answers" class="answers"></div>
+      <div class="actbar">
+        <p id="mt-feedback" class="fb" aria-live="polite"></p>
+        <button type="button" id="mt-next" class="primary">Weiter</button>
+      </div>
+    </section>
+    <section id="mt-test" class="panel" hidden aria-label="Test">
+      <div id="mt-test-start">
+        <p id="mt-test-title" class="q"></p>
+        <p>10 Fragen. Du bekommst keine Hilfe und keine Antworten zur Auswahl. Zuerst zeigst du fünf Gebirge auf der Karte, dann schreibst du die Namen von fünf Gebirgen.</p>
+        <button type="button" class="primary" id="mt-test-go">Test starten</button>
+      </div>
+      <div id="mt-test-run" hidden>
+        <p id="mt-test-progress" class="prog"></p>
+        <p id="mt-test-question" class="q"></p>
+        <div id="mt-test-type"><label for="mt-test-name">Name des Gebirges</label>
+          <input id="mt-test-name" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"></div>
+        <button type="button" class="primary" id="mt-test-confirm" disabled>Antwort bestätigen</button>
+      </div>
+      <div id="mt-test-end" hidden>
+        <p id="mt-test-done" class="q"></p>
+        <p id="mt-test-score" class="score" aria-live="polite"></p>
+        <div class="row">
+          <button type="button" id="mt-test-review">Antworten ansehen</button>
+          <button type="button" class="primary" id="mt-test-again">Nochmal testen</button>
+          <button type="button" id="mt-test-back">Zurück zum Start</button>
+        </div>
+      </div>
+      <div id="mt-test-look" hidden>
+        <p id="mt-look-progress" class="prog"></p>
+        <p id="mt-look-question" class="q"></p>
+        <p id="mt-look-answer"></p>
+        <p id="mt-look-verdict" class="fb" aria-live="polite"></p>
+        <div class="row"><button type="button" id="mt-look-prev">Zurück</button>
+          <button type="button" id="mt-look-next">Weiter</button>
+          <button type="button" id="mt-look-end">Zur Auswertung</button></div>
+      </div>
+    </section>
+    </div>
+  </section>
+  <section id="lakes" class="contents" hidden aria-label="Seen">
+    <nav aria-label="Modus (Seen)">
+      <button type="button" id="lk-mode-explore" aria-pressed="true">Karte erkunden</button>
+      <button type="button" id="lk-mode-practice" aria-pressed="false">Üben</button>
+      <button type="button" id="lk-mode-test" aria-pressed="false">Test</button>
+    </nav>
+    <div class="mapcol">
+    <svg id="lk-map" role="img" aria-label="Karte von Österreich mit neun Seen"></svg>
+    <p class="credit">Seen: Natural Earth (gemeinfrei); Mondsee, Millstätter See, Wolfgangsee und Achensee © OpenStreetMap-Mitwirkende (ODbL).</p>
+    </div>
+    <div class="side">
+    <p id="lk-label" class="label" aria-live="polite"></p>
+    <div id="lk-dirbar" class="dirbar" hidden>
+      <div class="seg" role="group" aria-label="Richtung">
+        <button type="button" id="lk-dir-m2n" aria-pressed="true">Karte → Name</button>
+        <button type="button" id="lk-dir-n2m" aria-pressed="false">Name → Karte</button>
+      </div>
+    </div>
+    <section id="lk-practice" class="panel" hidden aria-label="Üben">
+      <p id="lk-tally" class="tally"></p>
+      <p id="lk-question" class="q"></p>
+      <div id="lk-answers" class="answers"></div>
+      <div class="actbar">
+        <p id="lk-feedback" class="fb" aria-live="polite"></p>
+        <button type="button" id="lk-next" class="primary">Weiter</button>
+      </div>
+    </section>
+    <section id="lk-test" class="panel" hidden aria-label="Test">
+      <div id="lk-test-start">
+        <p id="lk-test-title" class="q"></p>
+        <p>8 Fragen. Du bekommst keine Hilfe und keine Antworten zur Auswahl. Zuerst zeigst du vier Seen auf der Karte, dann schreibst du die Namen von vier Seen.</p>
+        <button type="button" class="primary" id="lk-test-go">Test starten</button>
+      </div>
+      <div id="lk-test-run" hidden>
+        <p id="lk-test-progress" class="prog"></p>
+        <p id="lk-test-question" class="q"></p>
+        <div id="lk-test-type"><label for="lk-test-name">Name des Sees</label>
+          <input id="lk-test-name" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"></div>
+        <button type="button" class="primary" id="lk-test-confirm" disabled>Antwort bestätigen</button>
+      </div>
+      <div id="lk-test-end" hidden>
+        <p id="lk-test-done" class="q"></p>
+        <p id="lk-test-score" class="score" aria-live="polite"></p>
+        <div class="row">
+          <button type="button" id="lk-test-review">Antworten ansehen</button>
+          <button type="button" class="primary" id="lk-test-again">Nochmal testen</button>
+          <button type="button" id="lk-test-back">Zurück zum Start</button>
+        </div>
+      </div>
+      <div id="lk-test-look" hidden>
+        <p id="lk-look-progress" class="prog"></p>
+        <p id="lk-look-question" class="q"></p>
+        <p id="lk-look-answer"></p>
+        <p id="lk-look-verdict" class="fb" aria-live="polite"></p>
+        <div class="row"><button type="button" id="lk-look-prev">Zurück</button>
+          <button type="button" id="lk-look-next">Weiter</button>
+          <button type="button" id="lk-look-end">Zur Auswertung</button></div>
+      </div>
+    </section>
+    </div>
+  </section>
+  <section id="cities" class="contents" hidden aria-label="Städte">
+    <nav aria-label="Modus (Städte)">
+      <button type="button" id="ct-mode-explore" aria-pressed="true">Karte erkunden</button>
+      <button type="button" id="ct-mode-practice" aria-pressed="false">Üben</button>
+      <button type="button" id="ct-mode-test" aria-pressed="false">Test</button>
+    </nav>
+    <div class="mapcol">
+    <svg id="ct-map" role="img" aria-label="Karte von Österreich mit 30 Städten"></svg>
+    </div>
+    <div class="side">
+    <p id="ct-label" class="label" aria-live="polite"></p>
+    <div id="ct-dirbar" class="dirbar" hidden>
+      <div class="seg" role="group" aria-label="Richtung">
+        <button type="button" id="ct-dir-m2n" aria-pressed="true">Karte → Name</button>
+        <button type="button" id="ct-dir-n2m" aria-pressed="false">Name → Karte</button>
+      </div>
+    </div>
+    <section id="ct-practice" class="panel" hidden aria-label="Üben">
+      <p id="ct-tally" class="tally"></p>
+      <p id="ct-question" class="q"></p>
+      <div id="ct-answers" class="answers"></div>
+      <div class="actbar">
+        <p id="ct-feedback" class="fb" aria-live="polite"></p>
+        <button type="button" id="ct-next" class="primary">Weiter</button>
+      </div>
+    </section>
+    <section id="ct-test" class="panel" hidden aria-label="Test">
+      <div id="ct-test-start">
+        <p id="ct-test-title" class="q"></p>
+        <p>10 Fragen. Du bekommst keine Hilfe und keine Antworten zur Auswahl. Zuerst zeigst du fünf Städte auf der Karte, dann schreibst du die Namen von fünf Städten. Es gibt 30 Städte.</p>
+        <button type="button" class="primary" id="ct-test-go">Test starten</button>
+      </div>
+      <div id="ct-test-run" hidden>
+        <p id="ct-test-progress" class="prog"></p>
+        <p id="ct-test-question" class="q"></p>
+        <div id="ct-test-type"><label for="ct-test-name">Name der Stadt</label>
+          <input id="ct-test-name" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"></div>
+        <button type="button" class="primary" id="ct-test-confirm" disabled>Antwort bestätigen</button>
+      </div>
+      <div id="ct-test-end" hidden>
+        <p id="ct-test-done" class="q"></p>
+        <p id="ct-test-score" class="score" aria-live="polite"></p>
+        <div class="row">
+          <button type="button" id="ct-test-review">Antworten ansehen</button>
+          <button type="button" class="primary" id="ct-test-again">Nochmal testen</button>
+          <button type="button" id="ct-test-back">Zurück zum Start</button>
+        </div>
+      </div>
+      <div id="ct-test-look" hidden>
+        <p id="ct-look-progress" class="prog"></p>
+        <p id="ct-look-question" class="q"></p>
+        <p id="ct-look-answer"></p>
+        <p id="ct-look-verdict" class="fb" aria-live="polite"></p>
+        <div class="row"><button type="button" id="ct-look-prev">Zurück</button>
+          <button type="button" id="ct-look-next">Weiter</button>
+          <button type="button" id="ct-look-end">Zur Auswertung</button></div>
+      </div>
+    </section>
+    </div>
+  </section>
+  <section id="countries" class="contents" hidden aria-label="Nachbarländer">
+    <nav aria-label="Modus (Nachbarländer)">
+      <button type="button" id="cy-mode-explore" aria-pressed="true">Karte erkunden</button>
+      <button type="button" id="cy-mode-practice" aria-pressed="false">Üben</button>
+      <button type="button" id="cy-mode-test" aria-pressed="false">Test</button>
+    </nav>
+    <div class="mapcol">
+    <svg id="cy-map" role="img" aria-label="Karte von Österreich und seinen acht Nachbarländern"></svg>
+    <p class="credit">Länder: Natural Earth (gemeinfrei).</p>
+    </div>
+    <div class="side">
+    <p id="cy-label" class="label" aria-live="polite"></p>
+    <div id="cy-dirbar" class="dirbar" hidden>
+      <div class="seg" role="group" aria-label="Richtung">
+        <button type="button" id="cy-dir-m2n" aria-pressed="true">Karte → Name</button>
+        <button type="button" id="cy-dir-n2m" aria-pressed="false">Name → Karte</button>
+      </div>
+    </div>
+    <section id="cy-practice" class="panel" hidden aria-label="Üben">
+      <p id="cy-tally" class="tally"></p>
+      <p id="cy-question" class="q"></p>
+      <div id="cy-answers" class="answers"></div>
+      <div class="actbar">
+        <p id="cy-feedback" class="fb" aria-live="polite"></p>
+        <button type="button" id="cy-next" class="primary">Weiter</button>
+      </div>
+    </section>
+    <section id="cy-test" class="panel" hidden aria-label="Test">
+      <div id="cy-test-start">
+        <p id="cy-test-title" class="q"></p>
+        <p>8 Fragen. Du bekommst keine Hilfe und keine Antworten zur Auswahl. Zuerst zeigst du vier Länder auf der Karte, dann schreibst du die Namen von vier Ländern.</p>
+        <button type="button" class="primary" id="cy-test-go">Test starten</button>
+      </div>
+      <div id="cy-test-run" hidden>
+        <p id="cy-test-progress" class="prog"></p>
+        <p id="cy-test-question" class="q"></p>
+        <div id="cy-test-type"><label for="cy-test-name">Name des Landes</label>
+          <input id="cy-test-name" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"></div>
+        <button type="button" class="primary" id="cy-test-confirm" disabled>Antwort bestätigen</button>
+      </div>
+      <div id="cy-test-end" hidden>
+        <p id="cy-test-done" class="q"></p>
+        <p id="cy-test-score" class="score" aria-live="polite"></p>
+        <div class="row">
+          <button type="button" id="cy-test-review">Antworten ansehen</button>
+          <button type="button" class="primary" id="cy-test-again">Nochmal testen</button>
+          <button type="button" id="cy-test-back">Zurück zum Start</button>
+        </div>
+      </div>
+      <div id="cy-test-look" hidden>
+        <p id="cy-look-progress" class="prog"></p>
+        <p id="cy-look-question" class="q"></p>
+        <p id="cy-look-answer"></p>
+        <p id="cy-look-verdict" class="fb" aria-live="polite"></p>
+        <div class="row"><button type="button" id="cy-look-prev">Zurück</button>
+          <button type="button" id="cy-look-next">Weiter</button>
+          <button type="button" id="cy-look-end">Zur Auswertung</button></div>
+      </div>
+    </section>
+    </div>
+  </section>
+  <footer class="site-footer">Figuren: DiceBear „Clay“ (CC0)</footer>
+</main>
+</div>
+<script src="profiles.js?v=p2"></script>
+<script src="vendor/clay.js?v=p2"></script>
+<script src="avatar.js?v=p2"></script>
+<script src="data/map-data.js?v=p2"></script>
+<script src="data/region-data.js?v=p2"></script>
+<script src="data/pass-data.js?v=p2"></script>
+<script src="data/mountain-data.js?v=p2"></script>
+<script src="data/lake-data.js?v=p2"></script>
+<script src="data/city-data.js?v=p2"></script>
+<script src="progress.js?v=p2"></script>
+<script src="highlight.js?v=p2"></script>
+<script src="practice.js?v=p2"></script>
+<script src="test.js?v=p2"></script>
+<script src="feedback.js?v=p2"></script>
+<script src="results.js?v=p2"></script>
+<script src="history.js?v=p2"></script>
+<script src="maplabels.js?v=p2"></script>
+<script src="app.js?v=p2"></script>
+<script src="regions.js?v=p2"></script>
+<script src="regions-app.js?v=p2"></script>
+<script src="passes.js?v=p2"></script>
+<script src="passes-app.js?v=p2"></script>
+<script src="mountains.js?v=p2"></script>
+<script src="mountains-app.js?v=p2"></script>
+<script src="lakes.js?v=p2"></script>
+<script src="lakes-app.js?v=p2"></script>
+<script src="cities.js?v=p2"></script>
+<script src="cities-app.js?v=p2"></script>
+<script src="data/country-data.js?v=p2"></script>
+<script src="flags.js?v=p2"></script>
+<script src="countries.js?v=p2"></script>
+<script src="countries-app.js?v=p2"></script>
+<script src="theme.js?v=p2"></script>
+<script src="dashboard.js?v=p2"></script>
+<script src="profile-ui.js?v=p2"></script>
+<script src="keys.js?v=p2"></script>
+</body>
+</html>

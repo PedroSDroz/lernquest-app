@@ -1,0 +1,21 @@
+/* Nachbarländer (FEAT-m3-test-014). Own file so that the shared page keeps its edits small. */
+#cy-map { grid-column: 1 / -1; max-height: 72vh; }
+.cy { stroke: #fff; stroke-width: 1.2; stroke-linejoin: round; fill-rule: evenodd; }
+/* Eight pale, clearly different fills so that neighbouring countries read as separate shapes (REQ-m3-test-147). */
+.cy-deutschland { fill: #d9d2c5; } .cy-tschechien { fill: #c9dbb4; } .cy-slowakei { fill: #e6c9d6; } .cy-ungarn { fill: #f2d9a6; }
+.cy-slowenien { fill: #b9dcd6; } .cy-italien { fill: #e9bfa6; } .cy-schweiz { fill: #c3cbe6; } .cy-liechtenstein { fill: #b9a2d6; stroke: #4a2f78; stroke-width: 1.4; }
+.cy-at { fill: #f3ead2; stroke: #5b4a1f; stroke-width: 1.6; stroke-linejoin: round; pointer-events: none; }
+.cy-at-label { font: 700 15px system-ui, sans-serif; fill: #5b4a1f; pointer-events: none; }
+.dim .cy { opacity: .5; }
+.dim .cy-liechtenstein { opacity: .85; }
+.cy.sel, .cy.target { opacity: 1; fill: #e8590c; stroke: #14283c; stroke-width: 2; }
+.cy.correct { opacity: 1; fill: #1f7a4d; stroke: #14563a; stroke-width: 2; }
+.cy.wrong { opacity: 1; stroke: #c0262d; stroke-width: 3; stroke-dasharray: 3 4; }
+.cy.pick { opacity: 1; fill: #f6b38f; stroke: #e4572e; stroke-width: 2.4; }
+#cy-test-name { font-size: 1.2rem; padding: .6rem; border: 2px solid #b8c4d0; border-radius: .4rem; width: 16rem; max-width: 100%; box-sizing: border-box; display: block; margin-top: .3rem; }
+/* Ring around a marked small country (Liechtenstein); not drawn otherwise. */
+.cy-ring { display: none; fill: none; stroke-width: 2.5; pointer-events: none; }
+.cy-ring.sel, .cy-ring.target { display: block; stroke: #e8590c; }
+.cy-ring.correct { display: block; stroke: #1f7a4d; }
+.cy-ring.wrong { display: block; stroke: #c0262d; stroke-dasharray: 3 4; }
+.cy-ring.pick { display: block; stroke: #e4572e; }
