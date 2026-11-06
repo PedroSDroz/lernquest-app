@@ -43,10 +43,11 @@ Object.keys(localStorage).filter(k => k.startsWith('m3-test-')).forEach(k => loc
 ## Contents
 
 Plain HTML, CSS and JavaScript, with no build step and no dependencies.
-Map and place data live in `data/*.js`.
+Map and place data live in `js/data/*.js`.
 
 ## Versions
 
+- `v1.4.2` – code layout: scripts in `js/`, styles in `css/`; see `CHANGELOG.md`.
 - `v1.4.1` – scrolling Gebirge list with a scroll cue on every scrolling list, name buttons in Seen, site icon; see `CHANGELOG.md`.
 - `v1.4` – the layer bar (off by default) also in Mein Stand and Nachbarländer; see `CHANGELOG.md`.
 - `v1.3.1` – the phone top bar stays during a practice; see `CHANGELOG.md`.

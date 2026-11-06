@@ -2,7 +2,11 @@
 
 All notable changes to Lernquest (Österreich lernen), newest first.
 
-When a release is tagged, set `VERSION` and `RELEASE_DATE` in `src/version.js` to the newest entry below; a test fails if they disagree. The heading format is `## v1.2 – 2026-11-05`.
+When a release is tagged, set `VERSION` and `RELEASE_DATE` in `src/js/version.js` to the newest entry below; a test fails if they disagree. The heading format is `## v1.2 – 2026-11-05`.
+
+## v1.4.2 – 2026-11-06
+
+- Code layout only, no change in behaviour: `src/` holds `index.html`, the icons, `css/`, `js/` (with `js/data/` and `js/vendor/`) and `assets/` (`FIX-m3-test-014`).
 
 ## v1.4.1 – 2026-11-06
 
