@@ -20,6 +20,8 @@
   for (const c of countries) { areas[c.id] = el('path', { d: c.path, class: 'cy cy-' + c.id }); svg.appendChild(areas[c.id]); }
   // Austria is context, not a question item: drawn over the neighbours, never selectable (REQ-m3-test-146).
   svg.appendChild(el('path', { d: COUNTRY_DATA.austria, class: 'cy-at' }));
+  // The layers (FEAT-m3-test-030) lie on Austria, so they sit above its filled outline and below the labels (REQ-m3-test-399).
+  if (window.Layers) Layers.mount({ svg, host: 'countries' });
   const atLabel = el('text', { x: 300, y: 150, class: 'cy-at-label', 'text-anchor': 'middle' });
   atLabel.textContent = 'Österreich';
   svg.appendChild(atLabel);

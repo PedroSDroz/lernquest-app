@@ -1,6 +1,6 @@
 // Map layers (FEAT-m3-test-027): in "Karte erkunden" a child can show the items of other topics on the current map,
-// muted and display only. The choice is kept per profile and per topic. Nachbarländer has no control and is not offered;
-// Gebirge is not offered as a layer for now.
+// muted and display only. The choice is kept per profile and per topic; since FEAT-m3-test-030 the control is in every mode
+// of every topic, Nachbarländer included. Nachbarländer and Gebirge are not offered as layers.
 (function () {
   const KEY = 'm3-test-layers-v1';
   const ORDER = ['rivers', 'states', 'cities', 'capitals', 'lakes', 'passes'];
@@ -16,6 +16,7 @@
     cities: { offer: ['rivers', 'states', 'capitals', 'lakes', 'passes'], dflt: ['states'], base: true },
     lakes: { offer: ['rivers', 'states', 'cities', 'capitals', 'passes'], dflt: ['states'], base: true },
     passes: { offer: ['rivers', 'states', 'cities', 'capitals', 'lakes'], dflt: ['states'], base: true },
+    countries: { offer: ['rivers', 'states', 'cities', 'capitals', 'lakes', 'passes'], dflt: [], base: false },
     mountains: { offer: ['rivers', 'states', 'cities', 'capitals', 'lakes', 'passes'], dflt: [], base: false },
   };
 

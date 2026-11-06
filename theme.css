@@ -691,21 +691,19 @@ main > :has(> nav button[id$="mode-explore"][aria-pressed="true"]) > .side > .ex
 @media (prefers-reduced-motion: no-preference) { .hist-more svg { animation: hist-nudge 1.6s ease-in-out infinite; } }
 @keyframes hist-nudge { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(4px); } }
 
-/* Map layers (FEAT-m3-test-027): other topics' items on the map in "Karte erkunden", "Üben" and "Test" (not "Mein Stand"), muted and display only. */
-.layers { display: none; pointer-events: none; opacity: .6; }
-main > :has(> nav button[id$="mode-history"][aria-pressed="false"]) svg .layers { display: block; }
+/* Map layers (FEAT-m3-test-027): other topics' items on the map in all four modes (FEAT-m3-test-030), muted and display only. */
+.layers { pointer-events: none; opacity: .6; }
 .ly-line { fill: none; stroke: var(--ink-muted); stroke-width: 1; vector-effect: non-scaling-stroke; stroke-linejoin: round; }
 .ly-area { fill: var(--ink-muted); fill-opacity: .25; stroke: var(--ink-muted); stroke-width: 1; vector-effect: non-scaling-stroke; }
 .ly-dot { fill: var(--ink-muted); stroke: none; }
 .ly-bracket { fill: none; stroke: var(--ink-muted); stroke-width: 1.4; stroke-linecap: square; stroke-linejoin: miter; vector-effect: non-scaling-stroke; }
 .ly-ring { fill: none; stroke: var(--ink-muted); stroke-width: 1.4; vector-effect: non-scaling-stroke; }
 /* Bundesländer switched off on a map that draws the borders: only the inner borders go, the outline of Austria stays. */
-main > :has(> nav button[id$="mode-history"][aria-pressed="false"]) svg.ly-nobl :is(.st, .bl) { stroke: var(--land); }
-main > :has(> nav button[id$="mode-history"][aria-pressed="false"]) svg#ps-map.ly-nobl .st { stroke: var(--land-neutral); }
+svg.ly-nobl :is(.st, .bl) { stroke: var(--land); }
+svg#ps-map.ly-nobl .st { stroke: var(--land-neutral); }
 
 /* The toggles: icon-only pills in the look of the Hell/Dunkel switch, directly under the map. */
-.layer-ctl { display: none; align-items: center; flex-wrap: wrap; gap: 8px; margin: 0; }
-main > :has(> nav button[id$="mode-history"][aria-pressed="false"]) .mapcol > .layer-ctl { display: flex; }
+.layer-ctl { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin: 0; }
 .layer-seg { width: auto; }
 .layer-seg button { min-width: 48px; padding: 0 12px; display: grid; place-items: center; cursor: pointer; }
 .layer-reset { min-width: 48px; min-height: 48px; display: grid; place-items: center; border: 2px solid var(--line-control); border-radius: 16px; background: transparent; color: var(--ink-muted); cursor: pointer; }
@@ -713,3 +711,5 @@ main > :has(> nav button[id$="mode-history"][aria-pressed="false"]) .mapcol > .l
 .layer-seg button:focus-visible, .layer-reset:focus-visible { outline: 3px solid var(--focus, var(--sky-ink)); outline-offset: 2px; }
 /* A phone: the toggles are 44 px wide (48 px tall) so that the bar fits one row on most maps. */
 @media (max-width: 900px) { .layer-ctl { gap: 6px; } .layer-seg button, .layer-reset { min-width: 44px; padding: 0 8px; } .layer-reset { padding: 0; } }
+/* The Nachbarländer bar has seven toggles: tighter pills so that it is still one row at 375 px (NFR-m3-test-096). */
+@media (max-width: 420px) { .layer-ctl { gap: 4px; } .layer-seg.layer-seg { padding: 2px; gap: 2px; } }

@@ -47,6 +47,7 @@ Map and place data live in `data/*.js`.
 
 ## Versions
 
+- `v1.4` – the layer bar (off by default) also in Mein Stand and Nachbarländer; see `CHANGELOG.md`.
 - `v1.3.1` – the phone top bar stays during a practice; see `CHANGELOG.md`.
 - `v1.3` – map layers (off by default), cities grouped by Bundesland, Gebirge from the worksheet, settings file; see `CHANGELOG.md`.
 - `v1.2.1` – help and version bubble; see `CHANGELOG.md`.
