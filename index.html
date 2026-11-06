@@ -5,8 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script>try { var t = localStorage.getItem("m3-test-theme"); if (t === "dark" || t === "light") document.documentElement.setAttribute("data-theme", t); } catch (e) {}</script>
 <title>Österreich lernen</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="stylesheet" href="countries.css?v=p3">
-<link rel="stylesheet" href="theme.css?v=p22">
+<link rel="stylesheet" href="theme.css?v=p24">
 </head>
 <body>
 <div class="shell">
@@ -315,6 +318,7 @@
     </div>
     <div class="side">
     <p id="lk-label" class="label" aria-live="polite"></p>
+    <ul id="lk-list" aria-label="Seen"></ul>
     <div id="lk-dirbar" class="dirbar" hidden>
       <div class="seg" role="group" aria-label="Richtung">
         <button type="button" id="lk-dir-m2n" aria-pressed="true">Karte → Name</button>
@@ -509,6 +513,7 @@
 <script src="explore.js?v=p4"></script>
 <script src="settings.js?v=p1"></script>
 <script src="layers.js?v=p5"></script>
+<script src="scrollcue.js?v=p1"></script>
 <script src="app.js?v=p3"></script>
 <script src="regions.js?v=p3"></script>
 <script src="regions-app.js?v=p3"></script>
@@ -517,7 +522,7 @@
 <script src="mountains.js?v=p3"></script>
 <script src="mountains-app.js?v=p4"></script>
 <script src="lakes.js?v=p3"></script>
-<script src="lakes-app.js?v=p3"></script>
+<script src="lakes-app.js?v=p4"></script>
 <script src="cities.js?v=p6"></script>
 <script src="cities-app.js?v=p7"></script>
 <script src="data/country-data.js?v=p3"></script>

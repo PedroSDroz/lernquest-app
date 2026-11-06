@@ -83,8 +83,19 @@
     render();
   });
 
+  // Every lake as a button, in German alphabetical order, to choose by name in Karte erkunden (FIX-m3-test-013).
+  const chips = {};
+  for (const l of Explore.sortByName(lakes)) {
+    const li = document.createElement('li');
+    const b = document.createElement('button');
+    b.type = 'button'; b.textContent = l.name; b.setAttribute('aria-pressed', 'false');
+    b.addEventListener('click', () => { if (mode === 'explore') { sel = sel === l.id ? null : l.id; render(); } });
+    li.appendChild(b); g('lk-list').appendChild(li); chips[l.id] = b;
+  }
+
   function renderExplore() {
     g('lk-label').textContent = sel ? byId[sel].name : 'Wähle einen See';
+    for (const l of lakes) chips[l.id].setAttribute('aria-pressed', String(sel === l.id));
   }
 
   function renderPractice() {
@@ -165,6 +176,7 @@
     for (const m of ['explore', 'practice', 'test', 'history']) g('lk-mode-' + m).setAttribute('aria-pressed', String(mode === m));
     hist.sync(mode === 'history');
     g('lk-label').hidden = mode !== 'explore';
+    g('lk-list').hidden = mode !== 'explore';
     g('lk-dirbar').hidden = mode !== 'practice';
     g('lk-practice').hidden = mode !== 'practice';
     g('lk-test').hidden = mode !== 'test';

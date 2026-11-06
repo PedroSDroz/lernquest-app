@@ -4,6 +4,12 @@ All notable changes to Lernquest (Österreich lernen), newest first.
 
 When a release is tagged, set `VERSION` and `RELEASE_DATE` in `src/version.js` to the newest entry below; a test fails if they disagree. The heading format is `## v1.2 – 2026-11-05`.
 
+## v1.4.1 – 2026-11-06
+
+- The site has an icon in the browser tab (and for a phone's home screen): the green square with the dark mountain of the menu's brand button (`FIX-m3-test-012`).
+- Seen, Karte erkunden: below the map there is now a button for every lake, in alphabetical order. Pressing one selects the lake like a click on the map (`FIX-m3-test-013`).
+- Gebirge, Karte erkunden: the name buttons scroll in a box of their own instead of making the page long. Every side list that scrolls (the city and Gebirge buttons, the answer buttons in practice and test) shows a fade and a chevron at its foot while there is more below (`FIX-m3-test-011`).
+
 ## v1.4 – 2026-11-06
 
 - The layer bar (when switched on in `src/settings.js`) now also shows in "Mein Stand" of every topic and in all four modes of Nachbarländer, which offers Flüsse, Bundesländer, Städte or Hauptstädte, Seen and Gipfel und Pässe. The layers lie behind the known / not-yet marks in Mein Stand, and on the Nachbarländer map they lie on Austria. One choice per topic for all four modes; on a phone the bar is one row at 375 px (`FEAT-m3-test-030`).

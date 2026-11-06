@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <title>Österreich lernen</title>
+  <rect width="64" height="64" rx="18" fill="#5cc628"/>
+  <path d="M2 19L9 7l4 6 3-4 6 10z" transform="translate(32 32) scale(2.2) translate(-12 -13)" fill="none" stroke="#12330a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
