@@ -47,6 +47,7 @@ Map and place data live in `data/*.js`.
 
 ## Versions
 
+- `v1.3` – map layers (off by default), cities grouped by Bundesland, Gebirge from the worksheet, settings file; see `CHANGELOG.md`.
 - `v1.2.1` – help and version bubble; see `CHANGELOG.md`.
 - `v1.2` – celebrations and test headings; see `CHANGELOG.md`.
 - `v1.1` – first published release.

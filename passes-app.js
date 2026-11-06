@@ -20,6 +20,7 @@
   const el = (name, attrs) => { const e = document.createElementNS(NSV, name); for (const k in attrs) e.setAttribute(k, attrs[k]); return e; };
   const rings = {}, marks = {}, halos = {}, hits = {};
   for (const s of REGION_DATA.states) psvg.appendChild(el('path', { d: s.path, class: 'st' }));
+  if (window.Layers) Layers.mount({ svg: psvg, host: 'passes' });
   for (const p of passes) {
     rings[p.id] = el('circle', { cx: p.x, cy: p.y, r: 10, class: 'ring' });
     halos[p.id] = el('path', { class: 'pkhalo' });

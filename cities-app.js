@@ -22,6 +22,7 @@
   const el = (name, attrs) => { const e = document.createElementNS(NSV, name); for (const k in attrs) e.setAttribute(k, attrs[k]); return e; };
 
   for (const s of REGION_DATA.states) csvg.appendChild(el('path', { d: s.path, class: 'st' }));
+  if (window.Layers) Layers.mount({ svg: csvg, host: 'cities' });
   for (const c of cities) {
     rings[c.id] = el('circle', { cx: c.x, cy: c.y, class: 'ring' });
     dots[c.id] = el('circle', { cx: c.x, cy: c.y, class: 'dot' });
@@ -106,7 +107,34 @@
     render();
   }
 
+  // The buttons of Karte erkunden: one per city, grouped by Bundesland from west to east, each group under its name;
+  // pressing one is the same as clicking its dot (FIX-m3-test-002, FIX-m3-test-004).
+  const chips = {};
+  const addChip = (c) => {
+    const li = document.createElement('li');
+    const b = document.createElement('button');
+    b.type = 'button'; b.textContent = c.name; b.setAttribute('aria-pressed', 'false');
+    b.addEventListener('click', () => pointed(c.id));
+    li.appendChild(b); g('ct-list').appendChild(li); chips[c.id] = b;
+  };
+  // The settings file can turn the grouping off: then one alphabetical list, no headings (FEAT-m3-test-029).
+  if (typeof Settings !== 'undefined' && !Settings.get('groupCities')) sortedCities(cities).forEach(addChip);
+  else for (const grp of groupedCities(cities)) {
+    const head = document.createElement('li');
+    head.className = 'grp-head';
+    if (STATE_WAPPEN[grp.state]) {              // the state's coat of arms left of its name (FIX-m3-test-009)
+      const wappen = document.createElement('img');
+      wappen.className = 'wappen'; wappen.src = 'assets/wappen/' + STATE_WAPPEN[grp.state] + '.svg'; wappen.alt = '';
+      wappen.setAttribute('aria-hidden', 'true');
+      head.appendChild(wappen);
+    }
+    head.appendChild(document.createTextNode(grp.state));
+    g('ct-list').appendChild(head);
+    grp.cities.forEach(addChip);
+  }
+
   function renderExplore() {
+    for (const c of cities) chips[c.id].setAttribute('aria-pressed', String(sel === c.id));
     const l = g('ct-label');
     l.replaceChildren();
     if (!sel) { l.textContent = 'Wähle einen Punkt (Stadt)'; return; }
@@ -195,6 +223,7 @@
     for (const m of ['explore', 'practice', 'test', 'history']) g('ct-mode-' + m).setAttribute('aria-pressed', String(mode === m));
     hist.sync(mode === 'history');
     g('ct-label').hidden = mode !== 'explore';
+    g('ct-list').hidden = mode !== 'explore';
     g('ct-practice').hidden = mode !== 'practice';
     g('ct-dirbar').hidden = mode !== 'practice';
     g('ct-test').hidden = mode !== 'test';

@@ -4,6 +4,21 @@ All notable changes to Lernquest (Österreich lernen), newest first.
 
 When a release is tagged, set `VERSION` and `RELEASE_DATE` in `src/version.js` to the newest entry below; a test fails if they disagree. The heading format is `## v1.2 – 2026-11-05`.
 
+## v1.3 – 2026-11-06
+
+- App settings: `src/settings.js` is one place to set the app up without a code change. Two switches: `layersControl` (the layer bar under the maps; off as delivered, so the bar is hidden until it is switched on) and `groupCities` (city buttons grouped by Bundesland, or one alphabetical list). Change a value, reload; nothing is shown to the child or kept in the browser (`FEAT-m3-test-029`).
+- Karte erkunden, Üben and Test have icon toggles under the map: show the rivers, lakes, cities or capitals, passes and summits, or the Bundesländer borders of other topics, quietly in the background; a round arrow brings the map back. Remembered for each child and topic. Not in Mein Stand or Nachbarländer (`FEAT-m3-test-027`).
+- Städte, Karte erkunden: each Bundesland heading above the city buttons shows the state's coat of arms to the left of the name, replacing the striped flags (`FIX-m3-test-009`, `FIX-m3-test-006`).
+- Städte, Karte erkunden: Kärnten now comes before Oberösterreich in the grouped city buttons (`FIX-m3-test-005`).
+- The source line under a map (Seen, Gebirge, Nachbarländer) is smaller and grey, and begins "Quelle:"; the licence wording is unchanged (`FIX-m3-test-007`).
+- Städte, Karte erkunden: the city buttons are grouped by Bundesland, with the state's name above each group; the states run from west to east, and so do the cities within a state (`FIX-m3-test-004`).
+- Städte, Karte erkunden: the city buttons scroll in a box of their own instead of making the page long (`FIX-m3-test-003`).
+- Städte, Karte erkunden: below the map there is now a button for every city, in alphabetical order. Pressing a button selects the city on the map, like clicking its dot (`FIX-m3-test-002`).
+
+- Karte erkunden carries a one-line hint in every topic: tap the map or the list to learn; there are no points here (`FIX-m3-test-001`).
+- Mein Stand shows a fade and a small chevron at the foot of the list while there is more below it (`FIX-m3-test-001`).
+- The river list in Karte erkunden is in alphabetical order (`FIX-m3-test-001`).
+
 ## v1.2.3 – 2026-11-05
 
 - On a computer, the Hell/Dunkel switch at the bottom of the menu is whole again: the moon button meant for phones no longer squeezes it, and the help button no longer covers it.

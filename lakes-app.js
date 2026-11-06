@@ -19,6 +19,7 @@
   const el = (name, attrs) => { const e = document.createElementNS(NSV, name); for (const k in attrs) e.setAttribute(k, attrs[k]); return e; };
   const areas = {};
   for (const s of REGION_DATA.states) svg.appendChild(el('path', { d: s.path, class: 'bl' }));
+  if (window.Layers) Layers.mount({ svg: svg, host: 'lakes' });
   for (const l of lakes) { areas[l.id] = el('path', { d: l.path, class: 'lk' }); svg.appendChild(areas[l.id]); }
 
   // Screen pixels per map unit, read afresh at every click so it follows a resize (NFR-m3-test-031).

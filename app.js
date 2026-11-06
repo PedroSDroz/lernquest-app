@@ -10,6 +10,7 @@ const border = document.createElementNS(NS, 'path');
 border.setAttribute('d', MAP_DATA.border);
 border.setAttribute('class', 'border');
 svg.appendChild(border);
+if (window.Layers) Layers.mount({ svg, host: 'rivers' });
 
 const paths = {}, buttons = {}, hits = {};
 let mode = 'explore';
@@ -237,6 +238,9 @@ for (const r of MAP_DATA.rivers) {
   hits[r.id] = h;
   svg.appendChild(h);
 
+}
+// The list in Karte erkunden is alphabetical (FIX-m3-test-001, German collation).
+for (const r of Explore.sortByName(MAP_DATA.rivers)) {
   const li = document.createElement('li');
   const b = document.createElement('button');
   b.type = 'button';

@@ -6,7 +6,7 @@
 <script>try { var t = localStorage.getItem("m3-test-theme"); if (t === "dark" || t === "light") document.documentElement.setAttribute("data-theme", t); } catch (e) {}</script>
 <title>Österreich lernen</title>
 <link rel="stylesheet" href="countries.css?v=p3">
-<link rel="stylesheet" href="theme.css?v=p5">
+<link rel="stylesheet" href="theme.css?v=p13">
 </head>
 <body>
 <div class="shell">
@@ -238,11 +238,12 @@
       <button type="button" id="mt-mode-test" aria-pressed="false">Test</button>
     </nav>
     <div class="mapcol">
-    <svg id="mt-map" role="img" aria-label="Karte der Gebirge Österreichs mit zwanzig Gebirgen"></svg>
+    <svg id="mt-map" role="img" aria-label="Karte der Gebirge Österreichs mit dreiundzwanzig Gebirgen"></svg>
     <p id="mt-credit" class="credit"></p>
     </div>
     <div class="side">
     <p id="mt-label" class="label" aria-live="polite"></p>
+    <ul id="mt-list" aria-label="Gebirge"></ul>
     <section id="mt-practice-head" class="panel" hidden aria-label="Gebiet wählen">
       <div class="row">
         <div class="seg" role="group" aria-label="Gebiet">
@@ -271,7 +272,7 @@
     <section id="mt-test" class="panel" hidden aria-label="Test">
       <div id="mt-test-start">
         <p id="mt-test-title" class="q"></p>
-        <p>10 Fragen. Du bekommst keine Hilfe und keine Antworten zur Auswahl. Zuerst zeigst du fünf Gebirge auf der Karte, dann schreibst du die Namen von fünf Gebirgen.</p>
+        <p>10 Fragen. Du bekommst keine Hilfe und keine Antworten zur Auswahl. Zuerst zeigst du acht Gebirge auf der Karte, dann schreibst du die Namen von zwei Gebirgen.</p>
         <button type="button" class="primary" id="mt-test-go">Test starten</button>
       </div>
       <div id="mt-test-run" hidden>
@@ -310,7 +311,7 @@
     </nav>
     <div class="mapcol">
     <svg id="lk-map" role="img" aria-label="Karte von Österreich mit neun Seen"></svg>
-    <p class="credit">Seen: Natural Earth (gemeinfrei); Mondsee, Millstätter See, Wolfgangsee und Achensee © OpenStreetMap-Mitwirkende (ODbL).</p>
+    <p class="credit">Quelle: Natural Earth (gemeinfrei); Mondsee, Millstätter See, Wolfgangsee und Achensee © OpenStreetMap-Mitwirkende (ODbL).</p>
     </div>
     <div class="side">
     <p id="lk-label" class="label" aria-live="polite"></p>
@@ -374,6 +375,7 @@
     </div>
     <div class="side">
     <p id="ct-label" class="label" aria-live="polite"></p>
+    <ul id="ct-list" class="chips" aria-label="Städte"></ul>
     <div id="ct-dirbar" class="dirbar" hidden>
       <div class="seg" role="group" aria-label="Richtung">
         <button type="button" id="ct-dir-m2n" aria-pressed="true">Karte → Name</button>
@@ -431,7 +433,7 @@
     </nav>
     <div class="mapcol">
     <svg id="cy-map" role="img" aria-label="Karte von Österreich und seinen acht Nachbarländern"></svg>
-    <p class="credit">Länder: Natural Earth (gemeinfrei).</p>
+    <p class="credit">Quelle: Natural Earth (gemeinfrei).</p>
     </div>
     <div class="side">
     <p id="cy-label" class="label" aria-live="polite"></p>
@@ -492,7 +494,7 @@
 <script src="data/map-data.js?v=p3"></script>
 <script src="data/region-data.js?v=p3"></script>
 <script src="data/pass-data.js?v=p3"></script>
-<script src="data/mountain-data.js?v=p3"></script>
+<script src="data/mountain-data.js?v=p4"></script>
 <script src="data/lake-data.js?v=p3"></script>
 <script src="data/city-data.js?v=p3"></script>
 <script src="progress.js?v=p3"></script>
@@ -503,18 +505,21 @@
 <script src="feedback.js?v=p3"></script>
 <script src="results.js?v=p3"></script>
 <script src="history.js?v=p3"></script>
-<script src="maplabels.js?v=p3"></script>
+<script src="maplabels.js?v=p4"></script>
+<script src="explore.js?v=p4"></script>
+<script src="settings.js?v=p1"></script>
+<script src="layers.js?v=p5"></script>
 <script src="app.js?v=p3"></script>
 <script src="regions.js?v=p3"></script>
 <script src="regions-app.js?v=p3"></script>
 <script src="passes.js?v=p3"></script>
 <script src="passes-app.js?v=p3"></script>
 <script src="mountains.js?v=p3"></script>
-<script src="mountains-app.js?v=p3"></script>
+<script src="mountains-app.js?v=p4"></script>
 <script src="lakes.js?v=p3"></script>
 <script src="lakes-app.js?v=p3"></script>
-<script src="cities.js?v=p3"></script>
-<script src="cities-app.js?v=p3"></script>
+<script src="cities.js?v=p6"></script>
+<script src="cities-app.js?v=p7"></script>
 <script src="data/country-data.js?v=p3"></script>
 <script src="flags.js?v=p3"></script>
 <script src="countries.js?v=p3"></script>

@@ -84,7 +84,7 @@ main svg[id$="map"], main svg#map { grid-column: 1 !important; grid-row: 2; widt
 .legend { grid-column: 1; grid-row: 3; display: flex; gap: 24px; align-items: center; margin: 0; font-weight: 800; font-size: 16px; }
 .legend span { display: inline-flex; align-items: center; gap: 8px; } .legend svg { width: 26px; height: 22px; }
 .legend .ls { fill: var(--mark-line); stroke: var(--map-halo); stroke-width: 1.4; } .legend .lp { fill: none; stroke: var(--mark-line); stroke-width: 2.4; stroke-linecap: square; }
-.credit { grid-column: 1; grid-row: 4; font-size: 16px; line-height: 22px; color: var(--ink-muted); }
+.credit { grid-column: 1; grid-row: 4; font-size: 14px; line-height: 20px; font-weight: 700; color: var(--ink-muted); } /* the design system's caption scale (FIX-m3-test-005) */
 
 /* action column */
 .side { grid-column: 2; grid-row: 2 / span 3; display: flex; flex-direction: column; gap: 16px; min-width: 0; }
@@ -137,9 +137,23 @@ main svg[id$="map"], main svg#map { grid-column: 1 !important; grid-row: 2; widt
 
 /* river chips (learn mode) */
 ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 12px; }
-#river-list button { width: auto; min-height: 48px; padding: 0 16px; border: 2px solid var(--line-control); border-radius: 16px; background: var(--surface); color: var(--ink);
+#ct-list { gap: 8px; }
+/* FIX-m3-test-004: the cities are grouped by Bundesland; the state name is a heading line of its own above its buttons. */
+#ct-list .grp-head { flex: 0 0 100%; margin: 6px 0 -2px; font-size: 14px; font-weight: 800; color: var(--ink-muted); }
+#ct-list .grp-head:first-child { margin-top: 0; }
+#ct-list .grp-head { display: flex; align-items: center; }
+#ct-list .grp-head .wappen { height: 30px; width: 26px; object-fit: contain; flex: none; margin-right: 8px; }
+/* FIX-m3-test-003: the city buttons scroll on their own; the padding keeps the press edge and the focus ring from being cut. */
+#ct-list { min-height: 160px; overflow-y: auto; padding: 4px 8px 8px 4px; margin: -4px -8px -8px -4px; overscroll-behavior: contain; }
+/* On a computer the side column is as tall as the window at most, so the page itself does not scroll; the list takes the rest. */
+@media (min-width: 901px) {
+  .contents:has(#ct-list:not([hidden])) .side { position: sticky; top: 16px; align-self: start; max-height: calc(100vh - 150px); }
+  #ct-list { flex: 1 1 auto; min-height: 0; }
+}
+@media (max-width: 900px) { #ct-list { max-height: 40vh; } }
+#river-list button, #ct-list button, #mt-list button { width: auto; min-height: 48px; padding: 0 16px; border: 2px solid var(--line-control); border-radius: 16px; background: var(--surface); color: var(--ink);
   font-size: 16px; font-weight: 800; box-shadow: 0 4px 0 var(--line-control); cursor: pointer; margin-bottom: 4px; text-transform: none; letter-spacing: 0; }
-#river-list button[aria-pressed="true"] { background: var(--sky-soft); border-color: var(--sky); box-shadow: 0 4px 0 var(--sky-shade); color: var(--sky-ink); }
+#river-list button[aria-pressed="true"], #ct-list button[aria-pressed="true"], #mt-list button[aria-pressed="true"] { background: var(--sky-soft); border-color: var(--sky); box-shadow: 0 4px 0 var(--sky-shade); color: var(--sky-ink); }
 
 /* answer options */
 .answers, #answers, .side .answers, .side #answers { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; width: 100%; }
@@ -206,12 +220,12 @@ main label { font-weight: 800; }
 .mt-land { fill: var(--land-neutral); stroke: var(--land-neutral); stroke-width: 1.4; stroke-linejoin: round; }
 .mt .b { fill: var(--map-halo); stroke: var(--map-halo); stroke-width: 2.6; stroke-linejoin: round; }
 .mt .f { fill: var(--land); stroke: var(--land); stroke-width: .8; stroke-linejoin: round; }
-.mt .o { fill: none; stroke: none; stroke-linejoin: round; }
+.mt .o { fill: none; stroke: var(--land-line); stroke-width: 1.1; stroke-dasharray: 3.5 2.5; stroke-linejoin: round; }
 .dim .mt .f { opacity: .5; }
 .mt.sel .f, .mt.target .f { opacity: 1; fill: var(--mark); stroke: var(--mark); }
 .mt.sel .o, .mt.target .o { stroke: var(--mark-line); stroke-width: 1.8; }
 .mt.correct .f { opacity: 1; fill: var(--right); stroke: var(--right); }
-.mt.correct .o { stroke: #2b6b0a; stroke-width: 1.2; }
+.mt.correct .o { stroke: #2b6b0a; stroke-width: 1.6; }
 .mt.wrong .f { opacity: 1; }
 .mt.wrong .o { stroke: var(--wrong); stroke-width: 2.4; stroke-dasharray: 2 5; }
 .mt.pick .f { opacity: 1; fill: var(--pick); stroke: var(--pick); }
@@ -418,7 +432,7 @@ body.picking { overflow: hidden; }
 .ps-char[aria-pressed="true"] { border-color: var(--sky-ink); box-shadow: 0 0 0 2px var(--surface), 0 0 0 5px var(--sky); }
 .ps-swatch { width: 48px; height: 48px; border-radius: 999px; border: 3px solid var(--line-control); cursor: pointer; padding: 0; }
 .ps-swatch[aria-pressed="true"] { border-color: var(--ink); box-shadow: 0 0 0 3px var(--surface), 0 0 0 6px var(--sky); }
-.ps-credit { font-size: 13px; line-height: 18px; color: var(--ink-muted); text-align: center; }
+.ps-credit { font-size: 14px; line-height: 20px; font-weight: 700; color: var(--ink-muted); text-align: center; }
 .chip-pic img, .ps-pic img, .ps-preview img { width: 100%; height: auto; display: block; }
 .chip-pic { width: 48px; height: 48px; border-radius: 14px; }
 
@@ -495,7 +509,7 @@ body.picking { overflow: hidden; }
 .ps-outside .ps-actions { display: flex; gap: 12px; }
 .ps-danger-ghost { min-height: 48px; padding: 0 20px; border-radius: 16px; border: 2px solid var(--coral); background: transparent; color: var(--coral-ink); font: inherit; font-size: 16px; font-weight: 800; cursor: pointer; }
 .ps-min { font-size: 14px; color: var(--ink-muted); margin-top: 4px; }
-.ps-credit { font-size: 13px; line-height: 18px; color: var(--ink-muted); opacity: .8; text-align: center; }
+.ps-credit { font-size: 14px; line-height: 20px; font-weight: 700; color: var(--ink-muted); text-align: center; }
 body.home main > :not(#dashboard):not(.stage-title) { display: none !important; }
 .ps-box > .ps-secondary { align-self: center; width: auto; }
 
@@ -563,7 +577,6 @@ body.home main > :not(#dashboard):not(.stage-title) { display: none !important; 
   main:has(.side [id$="practice"]:not([hidden])) .side { min-height: 0; align-self: stretch; gap: 10px; }
   main:has(.side [id$="practice"]:not([hidden])) .mapcol > svg { max-height: 20vh !important; }
   main:has(.side [id$="practice"]:not([hidden])) .mapcol { gap: 4px; }
-  main:has(.side [id$="practice"]:not([hidden])) .credit { font-size: 14px; line-height: 18px; }
   .side [id$="answers"] button { min-height: 44px; }
   /* feedback and "Weiter" side by side, so the answers keep more room */
   main:has(.side [id$="practice"]:not([hidden])) .actbar { flex-direction: row; align-items: stretch; gap: 8px; }
@@ -649,3 +662,39 @@ body.home main > :not(#dashboard):not(.stage-title) { display: none !important; 
   body:has(main .side [id$="practice"]:not([hidden])) { --rail-h: 0px; }
   body:has(main .side [id$="practice"]:not([hidden])) .rail { display: none; }
 }
+
+/* FIX-m3-test-001: the one-line hint of "Karte erkunden", shown only while that mode's button is pressed. */
+.explore-hint { display: none; margin: 0; font-size: 16px; line-height: 24px; font-weight: 700; color: var(--ink-muted); }
+main > :has(> nav button[id$="mode-explore"][aria-pressed="true"]) > .side > .explore-hint { display: block; }
+/* FIX-m3-test-001: the foot of the "Mein Stand" list shows a fade and a chevron while there is more below. */
+.hist-scroll { position: relative; display: flex; flex-direction: column; min-height: 0; flex: 1 1 auto; }
+.hist-scroll .hist-list { flex: 1 1 auto; }
+.hist-more { display: none; position: absolute; left: 0; right: 0; bottom: -4px; height: 56px; pointer-events: none; align-items: flex-end; justify-content: center;
+  background: linear-gradient(to bottom, transparent, var(--surface) 85%); }
+.hist-scroll.more .hist-more { display: flex; }
+.hist-more svg { width: 28px; height: 28px; margin-bottom: 2px; fill: none; stroke: var(--ink-muted); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+@media (prefers-reduced-motion: no-preference) { .hist-more svg { animation: hist-nudge 1.6s ease-in-out infinite; } }
+@keyframes hist-nudge { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(4px); } }
+
+/* Map layers (FEAT-m3-test-027): other topics' items on the map in "Karte erkunden", "Üben" and "Test" (not "Mein Stand"), muted and display only. */
+.layers { display: none; pointer-events: none; opacity: .6; }
+main > :has(> nav button[id$="mode-history"][aria-pressed="false"]) svg .layers { display: block; }
+.ly-line { fill: none; stroke: var(--ink-muted); stroke-width: 1; vector-effect: non-scaling-stroke; stroke-linejoin: round; }
+.ly-area { fill: var(--ink-muted); fill-opacity: .25; stroke: var(--ink-muted); stroke-width: 1; vector-effect: non-scaling-stroke; }
+.ly-dot { fill: var(--ink-muted); stroke: none; }
+.ly-bracket { fill: none; stroke: var(--ink-muted); stroke-width: 1.4; stroke-linecap: square; stroke-linejoin: miter; vector-effect: non-scaling-stroke; }
+.ly-ring { fill: none; stroke: var(--ink-muted); stroke-width: 1.4; vector-effect: non-scaling-stroke; }
+/* Bundesländer switched off on a map that draws the borders: only the inner borders go, the outline of Austria stays. */
+main > :has(> nav button[id$="mode-history"][aria-pressed="false"]) svg.ly-nobl :is(.st, .bl) { stroke: var(--land); }
+main > :has(> nav button[id$="mode-history"][aria-pressed="false"]) svg#ps-map.ly-nobl .st { stroke: var(--land-neutral); }
+
+/* The toggles: icon-only pills in the look of the Hell/Dunkel switch, directly under the map. */
+.layer-ctl { display: none; align-items: center; flex-wrap: wrap; gap: 8px; margin: 0; }
+main > :has(> nav button[id$="mode-history"][aria-pressed="false"]) .mapcol > .layer-ctl { display: flex; }
+.layer-seg { width: auto; }
+.layer-seg button { min-width: 48px; padding: 0 12px; display: grid; place-items: center; cursor: pointer; }
+.layer-reset { min-width: 48px; min-height: 48px; display: grid; place-items: center; border: 2px solid var(--line-control); border-radius: 16px; background: transparent; color: var(--ink-muted); cursor: pointer; }
+.layer-reset[hidden] { display: none; }
+.layer-seg button:focus-visible, .layer-reset:focus-visible { outline: 3px solid var(--focus, var(--sky-ink)); outline-offset: 2px; }
+/* A phone: the toggles are 44 px wide (48 px tall) so that the bar fits one row on most maps. */
+@media (max-width: 900px) { .layer-ctl { gap: 6px; } .layer-seg button, .layer-reset { min-width: 44px; padding: 0 8px; } .layer-reset { padding: 0; } }

@@ -4,6 +4,7 @@
 (function () {
   const FONT_PX = 13;   // text size on the screen at any map size (REQ-m3-test-264)
   const SHORT = 'Nicht ganz.';
+  const MIN_GAP_PX = 12; // least distance on the screen between the wrong and the right label (FIX-m3-test-008)
 
   const text = (kind, name) => (kind === 'wrong' ? '✕ Deine Antwort: ' : '✓ Richtig: ') + name;
 
@@ -14,9 +15,31 @@
     return { x: Math.min(Math.max(b.x, vb.x), vb.x + vb.w - b.w), y: Math.min(Math.max(b.y, vb.y), vb.y + vb.h - b.h), w: b.w, h: b.h };
   }
 
+  // Two labels that share a stretch of the map (their widths overlap) keep at least minGap between them, top to bottom:
+  // the upper one moves up and the lower one down, each by half the shortfall, and stay inside the map (FIX-m3-test-008).
+  function separate(boxes, minGap, vb) {
+    if (!minGap || boxes.length < 2) return boxes;
+    const [a, b] = boxes;
+    if (!(a.x < b.x + b.w && b.x < a.x + a.w)) return boxes;
+    const [up, low] = a.y <= b.y ? [a, b] : [b, a];
+    const short = minGap - (low.y - (up.y + up.h));
+    if (short <= 0) return boxes;
+    let u = clamp({ ...up, y: up.y - short / 2 }, vb);
+    let l = clamp({ ...low, y: low.y + short / 2 }, vb);
+    // a box held by the map's edge leaves the rest of the shortfall to the other one
+    const left = minGap - (l.y - (u.y + u.h));
+    if (left > 0) { if (u.y > vb.y) u = clamp({ ...u, y: u.y - left }, vb); else l = clamp({ ...l, y: l.y + left }, vb); }
+    return a === up ? [u, l] : [l, u];
+  }
+
   // items: [{ kind: 'wrong' | 'right', ax, ay, w, h }]; the wrong label goes above its item, the right one below;
-  // when they would overlap, they swap, then both go on the same side. Returns the boxes in the same order.
-  function place(items, vb, gap) {
+  // when they would overlap, they swap, then both go on the same side. minGap (map units) is the least distance kept
+  // between the two labels, top to bottom. Returns the boxes in the same order.
+  function place(items, vb, gap, minGap = 0) {
+    return separate(placeBoxes(items, vb, gap), minGap, vb);
+  }
+
+  function placeBoxes(items, vb, gap) {
     const box = (it, side) => clamp({ x: it.ax - it.w / 2, y: side === 'above' ? it.ay - gap - it.h : it.ay + gap, w: it.w, h: it.h }, vb);
     const wanted = (it) => (it.kind === 'wrong' ? 'above' : 'below');
     const flip = (s) => (s === 'above' ? 'below' : 'above');
@@ -40,7 +63,7 @@
       + '<text class="ml-t" x="' + (b.x + padX) + '" y="' + (b.y + b.h / 2) + '" font-size="' + fs + '" dominant-baseline="central">' + esc(str) + '</text></g>';
   }
 
-  if (typeof module !== 'undefined') module.exports = { place, text, overlap, clamp, pillSvg, SHORT, FONT_PX };
+  if (typeof module !== 'undefined') module.exports = { place, separate, text, overlap, clamp, pillSvg, SHORT, FONT_PX, MIN_GAP_PX };
   if (typeof document === 'undefined') return;
 
   const NS = 'http://www.w3.org/2000/svg';
@@ -81,7 +104,7 @@
       g.removeChild(t);
       sized.push({ kind: it.kind, str: t.textContent, ax: a.x, ay: a.y, w: (len || t.textContent.length * fs * 0.62) + 2 * padX, h });
     }
-    const boxes = place(sized, vb, 16 / scale);
+    const boxes = place(sized, vb, 16 / scale, MIN_GAP_PX / scale); // 12 px between the two labels on the screen
     g.innerHTML = sized.map((s, i) => pillSvg(s.kind, s.str, boxes[i], scale, padX)).join('');
   }
 

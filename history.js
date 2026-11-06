@@ -74,7 +74,11 @@
     return FILTERS.map(([id, text]) => '<button type="button" class="hist-chip" data-filter="' + id + '" aria-pressed="' + (f === id) + '">' + text + ' ' + c[id] + '</button>').join('');
   }
 
-  if (typeof module !== 'undefined') module.exports = { buildRows, listHtml, counts, filterRows, rowHtml, chipsHtml, slotsHtml, label, emptyHtml, EXPLAIN, EMPTY };
+  // Is there more of the list below the visible part? (FIX-m3-test-001: the cue at the list's foot.) A pixel of slack
+  // absorbs fractional scroll positions.
+  const moreBelow = (el) => el.scrollHeight - el.clientHeight - el.scrollTop > 1;
+
+  if (typeof module !== 'undefined') module.exports = { moreBelow, buildRows, listHtml, counts, filterRows, rowHtml, chipsHtml, slotsHtml, label, emptyHtml, EXPLAIN, EMPTY };
   if (typeof document === 'undefined') return;
 
   // opts: { topic, section: id of the topic's section, items: [{ key, name }], enter(): switch the topic to this mode, change(): redraw the map }
@@ -93,16 +97,23 @@
     const panel = document.createElement('section');
     panel.className = 'hist-panel'; panel.hidden = true; panel.setAttribute('aria-label', 'Mein Stand');
     panel.innerHTML = '<div class="hist-head"><p class="hist-big"></p><div class="hist-bar" role="progressbar" aria-label="gekannt"><i></i></div>'
-      + '<div class="hist-chips"></div></div><div class="hist-list"></div><p class="hist-note"></p>';
+      + '<div class="hist-chips"></div></div><div class="hist-scroll"><div class="hist-list"></div>'
+      + '<span class="hist-more" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span></div><p class="hist-note"></p>';
     panel.querySelector('.hist-note').textContent = EXPLAIN;
     side.appendChild(panel);
-    const note = panel.querySelector('.hist-note'), big = panel.querySelector('.hist-big'), bar = panel.querySelector('.hist-bar'), chips = panel.querySelector('.hist-chips'), list = panel.querySelector('.hist-list');
+    const note = panel.querySelector('.hist-note'), big = panel.querySelector('.hist-big'), bar = panel.querySelector('.hist-bar'), chips = panel.querySelector('.hist-chips'), list = panel.querySelector('.hist-list'), scroll = panel.querySelector('.hist-scroll');
+
+    // The fade and chevron show while the list has more below, and go at the end (FIX-m3-test-001).
+    const cue = () => scroll.classList.toggle('more', moreBelow(list));
+    list.addEventListener('scroll', cue, { passive: true });
+    window.addEventListener('resize', cue);
 
     const marked = () => (hover !== null ? hover : pinned);
     function paintRows() {
       const shown = filterRows(rows, filter);
       list.innerHTML = shown.length ? listHtml(shown) : emptyHtml(filter);
       note.hidden = shown.length === 0;
+      list.scrollTop = 0;
       for (const b of list.querySelectorAll('.hist-row')) {
         const k = b.getAttribute('data-key');
         b.classList.toggle('hl', k === marked());
@@ -112,6 +123,7 @@
         b.addEventListener('blur', () => { hover = null; mark(); });
         b.addEventListener('click', () => { pinned = pinned === k ? null : k; mark(); });
       }
+      cue();
     }
     function mark() {
       for (const b of list.querySelectorAll('.hist-row')) b.classList.toggle('hl', b.getAttribute('data-key') === marked());
@@ -142,6 +154,7 @@
       if (active && !on) { hover = null; pinned = null; refresh(); }
       if (!active) { hover = null; pinned = null; }
       on = active;
+      if (active) cue(); // the list has a size only once the panel shows
     }
     // What the topic's view() paints: known items "correct", the pointed-at row's item "target".
     function marks() {

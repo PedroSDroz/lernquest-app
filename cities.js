@@ -97,4 +97,27 @@ function createCityTest({ cities, rng = Math.random }) {
   };
 }
 
-if (typeof module !== 'undefined') module.exports = { createCityPractice, createCityTest, CITY_TEST_POINTING, CITY_TEST_TYPED, CITY_CHOICES, CITY_NEAR, CITY_NEAR_POOL };
+// The Bundesländer from west to east, as the owner wants them in Karte erkunden (FIX-m3-test-004, FIX-m3-test-005): Kärnten comes
+// before Oberösterreich, which a sort by the mean position of the cities would not give.
+const STATE_ORDER = ['Vorarlberg', 'Tirol', 'Salzburg', 'Kärnten', 'Oberösterreich', 'Steiermark', 'Niederösterreich', 'Wien', 'Burgenland'];
+
+// The coats of arms of the nine Bundesländer, files in assets/wappen (FIX-m3-test-009).
+const STATE_WAPPEN = {
+  'Burgenland': 'burgenland', 'Kärnten': 'kaernten', 'Niederösterreich': 'niederoesterreich', 'Oberösterreich': 'oberoesterreich',
+  'Salzburg': 'salzburg', 'Steiermark': 'steiermark', 'Tirol': 'tirol', 'Vorarlberg': 'vorarlberg', 'Wien': 'wien',
+};
+
+// The cities grouped by Bundesland for the buttons of Karte erkunden: the states in STATE_ORDER, the cities of a state from west to east.
+function groupedCities(cities) {
+  const by = {};
+  for (const c of cities) (by[c.state] = by[c.state] || []).push(c);
+  const rank = (state) => (STATE_ORDER.includes(state) ? STATE_ORDER.indexOf(state) : STATE_ORDER.length);
+  return Object.keys(by)
+    .map((state) => ({ state, cities: by[state].slice().sort((a, b) => a.x - b.x) }))
+    .sort((a, b) => rank(a.state) - rank(b.state) || a.state.localeCompare(b.state, 'de'));
+}
+
+// The cities in one alphabetical list, for the buttons when the settings file turns the grouping off (FEAT-m3-test-029).
+function sortedCities(cities) { return cities.slice().sort((a, b) => a.name.localeCompare(b.name, 'de')); }
+
+if (typeof module !== 'undefined') module.exports = { sortedCities, groupedCities, STATE_ORDER, STATE_WAPPEN, createCityPractice, createCityTest, CITY_TEST_POINTING, CITY_TEST_TYPED, CITY_CHOICES, CITY_NEAR, CITY_NEAR_POOL };

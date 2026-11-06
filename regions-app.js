@@ -27,6 +27,7 @@
     a.dataset.id = s.id;
     areas[s.id] = a; rsvg.appendChild(a);
   }
+  if (window.Layers) Layers.mount({ svg: rsvg, host: 'regions' });
   for (const s of states) {
     const { x, y } = s.capital;
     rings[s.id] = el('circle', { cx: x, cy: y, r: 9, class: 'ring' });

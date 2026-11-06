@@ -23,8 +23,9 @@
   const land = typeof REGION_DATA !== 'undefined' ? REGION_DATA.states : [];
   for (const s of land) svg.appendChild(el('path', { d: s.path, class: 'mt-land-edge' }));
   for (const s of land) svg.appendChild(el('path', { d: s.path, class: 'mt-land' }));
+  if (window.Layers) Layers.mount({ svg: svg, host: 'mountains' });
   // Three layers per area: a white border, the fill (its own stroke hides seams between joined units), the outline.
-  for (const a of areas) {
+  for (const a of areas.slice().sort((x, y) => y.size - x.size)) { // large first, so a small area lies on top of a large one
     const grp = el('g', { class: 'mt' });
     for (const c of ['b', 'f', 'o']) grp.appendChild(el('path', { d: a.path, class: c }));
     groups[a.id] = grp;
@@ -92,7 +93,18 @@
     render();
   });
 
+  // Every area as a button, in German alphabetical order, to choose by name in Karte erkunden.
+  const chips = {};
+  for (const a of Explore.sortByName(areas)) {
+    const li = document.createElement('li');
+    const b = document.createElement('button');
+    b.type = 'button'; b.textContent = a.name; b.setAttribute('aria-pressed', 'false');
+    b.addEventListener('click', () => { if (mode === 'explore') { sel = sel === a.id ? null : a.id; render(); } });
+    li.appendChild(b); g('mt-list').appendChild(li); chips[a.id] = b;
+  }
+
   function renderExplore() {
+    for (const a of areas) chips[a.id].setAttribute('aria-pressed', String(sel === a.id));
     g('mt-label').textContent = sel ? byId[sel].name : 'Tippe ein Gebirge an.';
   }
 
@@ -156,7 +168,7 @@
     g('mt-look-answer').textContent = typed ? 'Du hast geschrieben: „' + String(it.answer).trim() + '“' : 'Du hast gewählt: ' + it.chosen.name;
     if (it.correct) v.textContent = Feedback.right(it.target.name, typed ? it.answer : undefined);
     else if (it.chosen) MapLabels.wrongText(v, Feedback.wrong(it.target.name, it.chosen.name, false));
-    else v.textContent = Feedback.wrongNoMatch(it.target.name, it.answer, 'keines der zwanzig Gebirge');
+    else v.textContent = Feedback.wrongNoMatch(it.target.name, it.answer, 'keines der dreiundzwanzig Gebirge');
     g('mt-look-prev').disabled = reviewIndex === 0;
     g('mt-look-next').disabled = reviewIndex === reviewing.length - 1;
   }
@@ -172,6 +184,7 @@
     for (const m of ['explore', 'practice', 'test', 'history']) g('mt-mode-' + m).setAttribute('aria-pressed', String(mode === m));
     hist.sync(mode === 'history');
     g('mt-label').hidden = mode !== 'explore';
+    g('mt-list').hidden = mode !== 'explore';
     g('mt-practice-head').hidden = mode !== 'practice';
     g('mt-dirbar').hidden = mode !== 'practice';
     g('mt-practice').hidden = mode !== 'practice';
