@@ -4,7 +4,7 @@ All notable changes to Lernquest (Österreich lernen), newest first.
 
 When a release is tagged, set `VERSION` and `RELEASE_DATE` in `src/version.js` to the newest entry below; a test fails if they disagree. The heading format is `## v1.2 – 2026-11-05`.
 
-## v1.4.1 – 2026-11-06
+## v1.3.1 – 2026-11-06
 
 - On a phone the top bar (brand button, moon toggle, profile figure) now stays during a practice, in every topic. In a practice it is a little slimmer, and a phone held sideways scrolls the practice page (`FIX-m3-test-010`).
 
